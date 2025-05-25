@@ -2,21 +2,38 @@
 <html>
   <head>
     <title>Todo App</title>
+    <!-- Protects against CSRF attacks -->
     <%= csrf_meta_tags %>
+
+    <!-- Link to the main CSS file -->
     <%= stylesheet_link_tag 'application' %>
   </head>
+
   <body>
     <header>
       <h1>Todo Application</h1>
-      <p>Visit count: <%= @visit_count %></p>
+
+      <!-- This section shows visit information -->
+      <div class="visits-info">
+        <!-- Greeting based on the current time -->
+        <p><%= get_time_based_greeting %></p>
+
+        <!-- Total visits to the whole app -->
+        <p>Total visits: <%= @total_visits %></p>
+
+        <!-- Number of visits to this specific page -->
+        <p>This page visits: <%= @visits_to_current_page %></p>
+      </div>
     </header>
 
     <main>
+      <!-- This is where each page's content will go -->
       <%= yield %>
     </main>
 
     <footer>
-      <p>Last visited: <%= session[:last_visited] %></p>
+      <!-- Shows when the user last visited -->
+      <p>Last visited: <%= time_ago_in_words(@last_visit_time) %> ago</p>
     </footer>
   </body>
 </html>
